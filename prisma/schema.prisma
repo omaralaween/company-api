@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Company {
+  id Int @id @default(autoincrement())
+  name String
+  industry String
+  location String?
+  createdAt DateTime @default(now())
+  employees Employee[] //this field is a relation, it is not a real column on the Company table.
+} 
+
+model Employee {
+  id Int @id @default(autoincrement())
+  firstName String
+  lastName String
+  department String
+  role String
+  companyId Int
+  company Company @relation(fields: [companyId], references: [id])
+  employeeAccounts EmployeeAccount?
+}
+
+enum Permission {
+    ADMIN
+    READ
+    WRITE
+  }
+
+model EmployeeAccount {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+  permission Permission @default(READ)
+  employeeId Int @unique
+  employee Employee @relation(fields: [employeeId], references: [id])
+}
