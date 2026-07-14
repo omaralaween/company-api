@@ -9,7 +9,7 @@ router.post("/", employeeAccountController.createEmployeeAccount);
 router.post("/login", employeeAccountController.userLogin);
 router.get("/", authenticate, authorize("ADMIN", "READ"), employeeAccountController.getAllEmployeeAccounts);
 router.get("/:id", authenticate, authorize("ADMIN", "READ"), employeeAccountController.getEmployeeAccountById);
-router.put("/:id", authenticate, authorize("ADMIN", "WRITE"), employeeAccountController.updateEmployeeAccount);
+router.patch("/:id", authenticate, authorize("ADMIN", "WRITE"), employeeAccountController.updateEmployeeAccount);
 router.delete("/:id", authenticate, authorize("ADMIN", "WRITE"), employeeAccountController.deleteEmployeeAccount);
 
 module.exports = router;

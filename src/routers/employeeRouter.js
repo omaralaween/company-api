@@ -9,7 +9,7 @@ const { authenticate, authorize } = require("../middlewares/auth");
 router.post("/", employeeController.createEmployee);
 router.get("/", authenticate, authorize("ADMIN", "READ"), employeeController.getAllEmployees);
 router.get("/:id", authenticate, authorize("ADMIN", "READ"), employeeController.getEmployeeById);
-router.put("/:id", authenticate, authorize("ADMIN", "WRITE"), employeeController.updateEmployee);
+router.patch("/:id", authenticate, authorize("ADMIN", "WRITE"), employeeController.updateEmployee);
 router.delete("/:id", authenticate, authorize("ADMIN", "WRITE"), employeeController.deleteEmployee);
 
 module.exports = router;

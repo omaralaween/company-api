@@ -9,7 +9,7 @@ const { authenticate, authorize } = require("../middlewares/auth");
 router.post("/", companyController.createCompany);
 router.get("/", authenticate, authorize("ADMIN", "READ"), companyController.getAllCompanies);
 router.get("/:id", authenticate, authorize("ADMIN", "READ"), companyController.getCompanyById);
-router.put("/:id", authenticate, authorize("ADMIN", "WRITE"), companyController.updateCompany);
+router.patch("/:id", authenticate, authorize("ADMIN", "WRITE"), companyController.updateCompany);
 router.delete("/:id", authenticate, authorize("ADMIN", "WRITE"), companyController.deleteCompany);
 
 module.exports = router;

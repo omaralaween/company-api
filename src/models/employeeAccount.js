@@ -75,10 +75,10 @@ async function getEmployeeAccountById(id) {
 }
 
 /**
- * Use to update an employee account record
+ * Use to update an employee account record, at least one of username/password should be provided
  * @param {number} id - Employee account ID
- * @param {string} username - New username for the account
- * @param {string} password - New password, should already be hashed before this is called
+ * @param {string} [username] - New username for the account
+ * @param {string} [password] - New password, should already be hashed before this is called. Leave undefined to keep the current password
  * @returns {Promise<EmployeeAccount>} - The updated account record
  */
 

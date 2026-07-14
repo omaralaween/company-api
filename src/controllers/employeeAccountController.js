@@ -124,24 +124,24 @@ async function userLogin(req, res) {
 }
 
 /**
- * Handles PUT request to update an employee account, username and password are both required. Requires a valid auth token (see middlewares/auth.js)
- * @param {Object} req - Express request object, expects id in params and username/password in the body
+ * Handles PATCH request to update an employee account, at least one of username/password is required. Requires a valid auth token (see middlewares/auth.js)
+ * @param {Object} req - Express request object, expects id in params and username and/or password in the body
  * @param {Object} res - Express response object
  * @returns {Promise<void>} - Sends the updated account as JSON
  */
 
 async function updateEmployeeAccount(req, res) {
   const { id } = req.params;
-  const { username } = req.body;
-  if (!username || !req.body.password) {
-    return res.status(400).json({ message: "Both fields should be privided!" });
+  const { username, password } = req.body;
+  if (!username && !password) {
+    return res.status(400).json({ message: "Atleast one field should be privided!" });
   }
-  const password = await bcrypt.hash(req.body.password, 10);
+  const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
   try {
     const employeeAccount = await employeeAccountModel.updateEmployeeAccount(
       parseInt(id),
       username,
-      password,
+      hashedPassword,
     );
     return res
       .status(200)

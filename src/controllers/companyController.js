@@ -68,7 +68,7 @@ async function getCompanyById(req, res) {
 }
 
 /**
- * Handles PUT request to update a company, at least one field is required
+ * Handles PATCH request to update a company, at least one field is required
  * @param {Object} req - Express request object, expects id in params and name/industry/location in the body
  * @param {Object} res - Express response object
  * @returns {Promise<void>} - Sends the updated company as JSON
