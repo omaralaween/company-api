@@ -1,7 +1,7 @@
 const employeeModel = require("../models/employee");
 
 /**
- * Handles POST request to create a new employee
+ * Handles POST request to create a new employee. Requires a valid admin auth token (see middlewares/auth.js)
  * @param {Object} req - Express request object, expects firstName, lastName, department, role and companyId in the body
  * @param {Object} res - Express response object
  * @returns {Promise<void>} - Sends the created employee as JSON, or an error message

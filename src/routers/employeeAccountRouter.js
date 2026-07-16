@@ -30,16 +30,22 @@ const { authenticate, authorize } = require("../middlewares/auth");
  *               permission:
  *                 type: string
  *                 example: READ
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       201:
  *         description: User created successfully!
  *       400:
  *         description: employeeId, username or password is not provided!
+ *       401:
+ *         description: not logged in / invalid or expired token
+ *       403:
+ *         description: Unauthorized user!
  *       500:
  *         description: Internal server error
  */
-// signup and login stay public, everything else needs a token
-router.post("/", employeeAccountController.createEmployeeAccount);
+// login stays public, everything else (including account creation) needs an admin token
+router.post("/", authenticate, authorize("ADMIN"), employeeAccountController.createEmployeeAccount);
 
 /**
  * @swagger

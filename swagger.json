@@ -65,12 +65,23 @@
             }
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "Employee created successfully!"
           },
           "400": {
             "description": "one of the fields is not provided!"
+          },
+          "401": {
+            "description": "not logged in / invalid or expired token"
+          },
+          "403": {
+            "description": "Unauthorized user!"
           },
           "500": {
             "description": "Internal server error"
@@ -252,12 +263,23 @@
             }
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "User created successfully!"
           },
           "400": {
             "description": "employeeId, username or password is not provided!"
+          },
+          "401": {
+            "description": "not logged in / invalid or expired token"
+          },
+          "403": {
+            "description": "Unauthorized user!"
           },
           "500": {
             "description": "Internal server error"
@@ -471,12 +493,23 @@
             }
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "Company created successfully"
           },
           "400": {
             "description": "name and industry are required"
+          },
+          "401": {
+            "description": "not logged in / invalid or expired token"
+          },
+          "403": {
+            "description": "Unauthorized user!"
           },
           "500": {
             "description": "Internal server error"

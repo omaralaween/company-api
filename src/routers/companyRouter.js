@@ -27,17 +27,21 @@ const { authenticate, authorize } = require("../middlewares/auth");
  *               location:
  *                 type: string
  *                 example: New York
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       201:
  *         description: Company created successfully
  *       400:
  *         description: name and industry are required
+ *       401:
+ *         description: not logged in / invalid or expired token
+ *       403:
+ *         description: Unauthorized user!
  *       500:
  *         description: Internal server error
  */
-// creation stays public (same as employee-account signup), otherwise there'd be no way to
-// bootstrap a company/employee before anyone has a token to log in with
-router.post("/", companyController.createCompany);
+router.post("/", authenticate, authorize("ADMIN"), companyController.createCompany);
 
 /**
  * @swagger

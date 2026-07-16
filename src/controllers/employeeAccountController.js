@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 /**
- * Handles POST request to create a new employee account, hashes the password before saving it
+ * Handles POST request to create a new employee account, hashes the password before saving it. Requires a valid admin auth token (see middlewares/auth.js)
  * @param {Object} req - Express request object, expects employeeId, username and password in the body
  * @param {Object} res - Express response object
  * @returns {Promise<void>} - Sends the created account as JSON, or an error message

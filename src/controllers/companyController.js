@@ -1,7 +1,7 @@
 const companyModel = require("../models/company");
 
 /**
- * Handles POST request to create a new company
+ * Handles POST request to create a new company. Requires a valid admin auth token (see middlewares/auth.js)
  * @param {Object} req - Express request object, expects name, industry and location in the body
  * @param {Object} res - Express response object
  * @returns {Promise<void>} - Sends the created company as JSON, or an error message

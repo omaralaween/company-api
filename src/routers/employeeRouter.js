@@ -33,17 +33,21 @@ const { authenticate, authorize } = require("../middlewares/auth");
  *               companyId:
  *                 type: integer
  *                 example: 3
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       201:
  *         description: Employee created successfully!
  *       400:
  *         description: one of the fields is not provided!
+ *       401:
+ *         description: not logged in / invalid or expired token
+ *       403:
+ *         description: Unauthorized user!
  *       500:
  *         description: Internal server error
  */
-// creation stays public (same as employee-account signup), otherwise there'd be no way to
-// bootstrap an employee before anyone has a token to log in with
-router.post("/", employeeController.createEmployee);
+router.post("/", authenticate, authorize("ADMIN"), employeeController.createEmployee);
 
 /**
  * @swagger
