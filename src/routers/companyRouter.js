@@ -63,7 +63,7 @@ router.get("/", authenticate, authorize("ADMIN", "READ"), companyController.getA
  * @swagger
  * /companies/{id}:
  *   get:
- *     summary: Get a single company by its ID
+ *     summary: Get one or more companies by ID
  *     tags: [Companies]
  *     security:
  *       - bearerAuth: []
@@ -71,15 +71,17 @@ router.get("/", authenticate, authorize("ADMIN", "READ"), companyController.getA
  *       - in: path
  *         name: id
  *         required: true
+ *         description: A single company ID, or a comma-separated list of IDs
  *         schema:
- *           type: integer
+ *           type: string
+ *         example: "3,4,5"
  *     responses:
  *       200:
- *         description: Company retrieved successfully
+ *         description: Companies retrieved successfully
  *       500:
  *         description: Internal server error
  */
-router.get("/:id", authenticate, authorize("ADMIN", "READ"), companyController.getCompanyById);
+router.get("/:id", authenticate, authorize("ADMIN", "READ"), companyController.getCompaniesById);
 
 /**
  * @swagger

@@ -1,3 +1,4 @@
+const { isDbNull } = require("@prisma/client/runtime/client");
 const prisma = require("../lib/prisma");
 /**
  * @typedef {Object} Company
@@ -16,8 +17,10 @@ const prisma = require("../lib/prisma");
  */
 
 async function createCompany(name, industry, location) {
-    const company = await prisma.company.create({ data: { name, industry, location } });
-    return company;
+  const company = await prisma.company.create({
+    data: { name, industry, location },
+  });
+  return company;
 }
 
 /**
@@ -26,19 +29,21 @@ async function createCompany(name, industry, location) {
  */
 
 async function getAllCompanies() {
-    const companies = await prisma.company.findMany();
-    return companies;
+  const companies = await prisma.company.findMany();
+  return companies;
 }
 
 /**
- * Used when a specific company record is wanted, using it's ID
- * @param {number} id Company ID was created automatically when record was created
- * @returns {Promise<Company>} Returns an object of type Company 
+ * Used when one or more specific company records are wanted, using their IDs
+ * @param {number[]} ids Array of company IDs, can contain a single ID
+ * @returns {Promise<Company[]>} Returns an array of matching Company records
  */
 
-async function getCompanyById(id) {
-    const company = await prisma.company.findUnique({ where: { id } });
-    return company;
+async function getCompaniesById(ids) {
+  const company = await prisma.company.findMany({
+    where: { id: { in: ids } },
+  });
+  return company;
 }
 
 /**
@@ -51,11 +56,11 @@ async function getCompanyById(id) {
  */
 
 async function updateCompany(id, name, industry, location) {
-    const company = await prisma.company.update({
-      where: { id },
-      data: { name, industry, location }
-    });
-    return company;
+  const company = await prisma.company.update({
+    where: { id },
+    data: { name, industry, location },
+  });
+  return company;
 }
 
 /**
@@ -65,8 +70,14 @@ async function updateCompany(id, name, industry, location) {
  */
 
 async function deleteCompany(id) {
-    const company = await prisma.company.delete({ where: { id } });
-    return company;
+  const company = await prisma.company.delete({ where: { id } });
+  return company;
 }
 
-module.exports = { createCompany, getAllCompanies, getCompanyById, updateCompany, deleteCompany };
+module.exports = {
+  createCompany,
+  getAllCompanies,
+  getCompaniesById,
+  updateCompany,
+  deleteCompany,
+};

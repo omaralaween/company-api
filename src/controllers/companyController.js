@@ -46,25 +46,26 @@ async function getAllCompanies(req, res) {
 }
 
 /**
- * Handles GET request to retrieve a single company by it's ID
- * @param {Object} req - Express request object, expects id in the params
+ * Handles GET request to retrieve one or more companies by ID
+ * @param {Object} req - Express request object, expects id in the params, either a single ID (e.g. "3") or comma-separated IDs (e.g. "3,4,5")
  * @param {Object} res - Express response object
- * @returns {Promise<void>} - Sends the company as JSON
+ * @returns {Promise<void>} - Sends an array of matching companies as JSON
  */
 
-async function getCompanyById(req, res) {
-  const { id } = req.params; //we used params because the id comes in the request URL body parameters
-  try {
-    const company = await companyModel.getCompanyById(parseInt(id)); //the body and the params lways come as strings, so we should parse the id because it is initalized as an int in the db
-    return res
-      .status(200)
-      .json({ message: "Companies retrieved successfully!", company });
-  } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .json({ message: "Internal server error, please try again later" });
-  }
+async function getCompaniesById(req, res) {
+  const { id } = req.params; //params always come as strings, so the id(s) need to be parsed into numbers
+  const ids = id.split(",").map(Number);
+    try {
+      const companies = await companyModel.getCompaniesById(ids);
+      return res
+        .status(200)
+        .json({ message: "Companies retrieved successfully!", companies });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .json({ message: "Internal server error, please try again later" });
+    }
 }
 
 /**
@@ -121,7 +122,7 @@ async function deleteCompany(req, res) {
 module.exports = {
   createCompany,
   getAllCompanies,
-  getCompanyById,
+  getCompaniesById,
   updateCompany,
   deleteCompany
 };
